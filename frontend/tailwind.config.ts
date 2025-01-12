@@ -1,4 +1,3 @@
-
 const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,6 +10,10 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
         "2xl": "1400px",
       },
     },
@@ -18,6 +21,7 @@ const config = {
       colors: {
         // Brand Colors
         primary: {
+          DEFAULT: "#5B21B6", // Deep Purple
           50: "#f5f3ff",
           100: "#ede9fe",
           200: "#ddd6fe",
@@ -31,6 +35,7 @@ const config = {
           950: "#2e1065",
         },
         secondary: {
+          DEFAULT: "#0D9488", // Teal
           50: "#fff7ed",
           100: "#ffedd5",
           200: "#fed7aa",
@@ -42,6 +47,18 @@ const config = {
           800: "#9a3412",
           900: "#7c2d12",
           950: "#431407",
+        },
+        accent: {
+          DEFAULT: "#FF6B6B", // Coral for CTAs
+          hover: "#FF8787",
+        },
+        mint: {
+          DEFAULT: "#4FD1C5", // Mint for success states
+          light: "#9DECF9",
+        },
+        background: {
+          DEFAULT: "#F8FAFC", // Off-white background
+          glass: "rgba(248, 250, 252, 0.8)",
         },
         // Semantic Colors
         success: {
@@ -65,7 +82,7 @@ const config = {
           600: "#2563EB",
         },
         // UI Colors
-        background: "rgb(var(--background) / <alpha-value>)",
+        backgrounds: "rgb(var(--background) / <alpha-value>)",
         foreground: "rgb(var(--foreground) / <alpha-value>)",
         card: {
           DEFAULT: "rgb(var(--card-background) / <alpha-value>)",
@@ -77,11 +94,16 @@ const config = {
         },
       },
       borderRadius: {
+        'pill': '9999px',
+        DEFAULT: '12px', // New default border radius
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
+        'space-grotesk': ['Space Grotesk', 'var(--font-sans)', 'system-ui'],
+        'inter': ['Inter', 'var(--font-sans)', 'system-ui'],
+        'jetbrains': ['JetBrains Mono', 'monospace'],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       keyframes: {
@@ -97,11 +119,29 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        pulse: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleUp: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.05)' },
+        },
       },
       animation: {
         shimmer: "shimmer 1.5s infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-in': 'fadeIn 0.3s ease-in',
+        'scale-up': 'scaleUp 0.3s ease-out',
+      },
+      backdropBlur: {
+        xs: '2px',
       },
       spacing: {
         18: "4.5rem",
@@ -116,6 +156,7 @@ const config = {
         "8xl": "88rem",
       },
       boxShadow: {
+        glass: '0 4px 30px rgba(0, 0, 0, 0.1)',
         glow: "0 0 4px rgb(0 0 0 / 0.1)",
         "glow-lg": "0 0 8px rgb(0 0 0 / 0.1)",
       },
@@ -125,7 +166,21 @@ const config = {
       },
     },
   },
-  plugins: [import('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    // Add plugin for custom utilities if needed
+    function({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = {
+        '.glassmorphism': {
+          'background': 'rgba(255, 255, 255, 0.2)',
+          'backdrop-filter': 'blur(8px)',
+          'border': '1px solid rgba(255, 255, 255, 0.3)',
+          'box-shadow': '0 4px 30px rgba(0, 0, 0, 0.1)',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 };
 
 export default config;
